@@ -12,7 +12,7 @@ import java.util.Map;
 
 @RestController
 public class AuthenticationController {
-	@GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> user(
 			@AuthenticationPrincipal OAuth2User authPrincipal) {
 		Map<String, Object> userResponse = new HashMap<>();
