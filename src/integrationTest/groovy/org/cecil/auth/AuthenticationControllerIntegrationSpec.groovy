@@ -8,9 +8,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AuthenticationControllerIntegrationSpec extends BaseIntegrationSpec {
     def "GET /user unauthenticated user gets 401"() {
         expect:
-        mockMvc.perform(get('/user')).andExpect(status().is3xxRedirection())
+        mockMvc.perform(get('/user')).andExpect(status().isUnauthorized())
     }
-    
+
     def "GET /user authenticated user gets user name response"() {
         expect:
         def httpResponse = mockMvc.perform(get('/user')).andExpect(status().isOk()).andReturn()

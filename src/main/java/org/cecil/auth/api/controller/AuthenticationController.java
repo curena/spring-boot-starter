@@ -1,5 +1,6 @@
 package org.cecil.auth.api.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -11,7 +12,7 @@ import java.util.Map;
 
 @RestController
 public class AuthenticationController {
-	@GetMapping("/user")
+	@GetMapping(value = "/user", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<String, Object>> user(
 			@AuthenticationPrincipal OAuth2User authPrincipal) {
 		Map<String, Object> userResponse = new HashMap<>();
