@@ -14,9 +14,9 @@ class BaseIntegrationSpec extends Specification {
     @Autowired
     MockMvc mockMvc
 
-    def faker = new Faker()
+    protected faker = new Faker()
 
-    def "unauthorized user should get redirected to gh"() {
+    def "unauthorized user should get redirected to auth provider"() {
         expect:
         mockMvc
         mockMvc.perform(get('/actuator/health')).andExpect(status().is3xxRedirection())
