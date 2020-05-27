@@ -1,4 +1,4 @@
-package org.cecil.auth
+package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker

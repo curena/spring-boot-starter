@@ -1,7 +1,7 @@
-package org.cecil.auth
+package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.cecil.auth.api.model.User
+import org.cecil.start.api.model.User
 import org.springframework.beans.factory.annotation.Autowired
 
 import java.nio.charset.Charset

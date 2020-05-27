@@ -1,4 +1,4 @@
-package org.cecil.auth.db;
+package org.cecil.start.db;
 
 public class UserEntity {
 }

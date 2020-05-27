@@ -1,4 +1,4 @@
-package org.cecil.auth
+package org.cecil.start
 
 import spock.lang.Specification
 

@@ -1,4 +1,4 @@
-package org.cecil.auth;
+package org.cecil.start;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
