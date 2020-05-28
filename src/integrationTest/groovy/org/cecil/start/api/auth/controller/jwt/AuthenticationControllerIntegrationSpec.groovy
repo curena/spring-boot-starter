@@ -1,14 +1,17 @@
-package org.cecil.start
+package org.cecil.start.api.auth.controller.jwt
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.cecil.start.BaseIntegrationSpec
 import org.cecil.start.api.model.User
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.context.TestPropertySource
 
 import java.nio.charset.Charset
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
+@TestPropertySource(locations = "/application-test.yml")
 class AuthenticationControllerIntegrationSpec extends BaseIntegrationSpec {
     @Autowired
     ObjectMapper objectMapper
@@ -26,7 +29,7 @@ class AuthenticationControllerIntegrationSpec extends BaseIntegrationSpec {
                 .andReturn()
         def userJson = httpResponse.getResponse().getContentAsString(Charset.defaultCharset())
         def user = objectMapper.readValue(userJson, User)
-        user.name == principal.principal.getAttribute("name")
+        user.username == principal.principal.getAttribute("name")
     }
 
 

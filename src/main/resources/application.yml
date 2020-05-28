@@ -18,3 +18,11 @@ management:
     web:
       exposure:
         include: info,health,metrics,mappings
+
+jwt:
+  signing-key-secret:
+  get-token-uri: /authenticate
+  refresh-token-uri: /refresh
+  http-request-header: Authorization
+  token:
+    expiration-in-seconds: 604800

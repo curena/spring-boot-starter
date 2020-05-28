@@ -1,4 +1,7 @@
-package org.cecil.start
+package org.cecil.start.api.controller
+
+import org.cecil.start.BaseIntegrationSpec
+import spock.lang.Ignore
 
 import java.nio.charset.Charset
 
@@ -7,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class HelloWorldControllerIntegrationSpec extends BaseIntegrationSpec {
 
+    @Ignore
     def "should get 200 and hello world response"() {
 //        def principal = buildPrincipal()
         //.session(getMockSession(principal)

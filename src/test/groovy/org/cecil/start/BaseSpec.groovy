@@ -1,11 +1,10 @@
 package org.cecil.start
 
+import com.github.javafaker.Faker
 import spock.lang.Specification
 
 
 class BaseSpec extends Specification {
-    def "should"() {
-        expect:
-        true
-    }
+    def faker = new Faker()
+
 }
