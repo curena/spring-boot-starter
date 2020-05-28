@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//TODO move from inMemoryList to DB eventually.
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
     public String getAuthenticationMessage() {

@@ -1,6 +1,6 @@
 package org.cecil.start.util
 
-import groovy.util.logging.Slf4j
+
 import org.cecil.start.BaseSpec
 import org.cecil.start.service.auth.JwtUserDetails
 
@@ -18,8 +18,9 @@ class JwtTokenUtilSpec extends BaseSpec {
 
     def "JWT generation happy path"() {
         given:
+        def username = faker.name().firstName()
         def userDetails = JwtUserDetails.withDefaultPasswordEncoder()
-                .username(faker.name().firstName())
+                .username(username)
                 .password("bar")
                 .roles("USER").build()
 
@@ -32,6 +33,7 @@ class JwtTokenUtilSpec extends BaseSpec {
         jwtTokenUtil.getExpirationDateFromToken(token)
                 .after(Date.from(Instant.ofEpochSecond(expirationInSeconds)))
         jwtTokenUtil.canTokenBeRefreshed(token)
+        jwtTokenUtil.getUsernameFromToken(token) == username
     }
 
 
