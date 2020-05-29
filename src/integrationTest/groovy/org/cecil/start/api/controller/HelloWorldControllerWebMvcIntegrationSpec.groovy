@@ -1,6 +1,8 @@
 package org.cecil.start.api.controller
 
 import org.cecil.start.BaseWebMvcIntegrationSpec
+import org.cecil.start.api.model.JwtUserDetails
+import org.springframework.security.test.context.support.WithMockUser
 import spock.lang.Ignore
 
 import java.nio.charset.Charset
@@ -10,12 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class HelloWorldControllerWebMvcIntegrationSpec extends BaseWebMvcIntegrationSpec {
 
-    @Ignore
     def "should get 200 and hello world response"() {
-//        def principal = buildPrincipal()
-        //.session(getMockSession(principal)
         expect:
-        def httpResponse = mockMvc.perform(get('/api/hello'))
+        def httpResponse = mockMvc.perform(get('/api/hello')
+                .header("Authorization", "Bearer ${generateValidToken()}"))
                 .andExpect(status().isOk())
                 .andReturn()
         def response = httpResponse.getResponse().getContentAsString(Charset.defaultCharset())

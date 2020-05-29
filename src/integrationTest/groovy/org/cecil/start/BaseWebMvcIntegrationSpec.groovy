@@ -2,6 +2,7 @@ package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
+import org.cecil.start.api.model.JwtUserDetails
 import org.cecil.start.util.JwtTokenUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -59,5 +60,13 @@ class BaseWebMvcIntegrationSpec extends Specification {
                 new OAuth2UserAuthority("ROLE_USER", attributes))
         def user = new DefaultOAuth2User(authorities, attributes, "sub")
         new OAuth2AuthenticationToken(user, authorities, "whatever")
+    }
+
+    def generateValidToken() {
+        jwtTokenUtil.generateToken(JwtUserDetails
+                .withDefaultPasswordEncoder()
+                .username("foo")
+                .password("bar")
+                .authorities("USER").build())
     }
 }
