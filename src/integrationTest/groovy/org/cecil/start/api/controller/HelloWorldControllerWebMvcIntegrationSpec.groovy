@@ -1,6 +1,6 @@
 package org.cecil.start.api.controller
 
-import org.cecil.start.BaseIntegrationSpec
+import org.cecil.start.BaseWebMvcIntegrationSpec
 import spock.lang.Ignore
 
 import java.nio.charset.Charset
@@ -8,7 +8,7 @@ import java.nio.charset.Charset
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-class HelloWorldControllerIntegrationSpec extends BaseIntegrationSpec {
+class HelloWorldControllerWebMvcIntegrationSpec extends BaseWebMvcIntegrationSpec {
 
     @Ignore
     def "should get 200 and hello world response"() {

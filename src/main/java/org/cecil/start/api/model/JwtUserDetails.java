@@ -1,4 +1,4 @@
-package org.cecil.start.service.auth;
+package org.cecil.start.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;

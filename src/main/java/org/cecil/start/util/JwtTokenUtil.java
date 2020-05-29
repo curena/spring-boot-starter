@@ -21,7 +21,7 @@ public class JwtTokenUtil {
 
     private final Clock clock = DefaultClock.INSTANCE;
 
-    @Value("${jwt.signing.key.secret}")
+    @Value("${jwt.signing-key-secret}")
     private String secret;
 
     @Value("${jwt.token.expiration-in-seconds}")

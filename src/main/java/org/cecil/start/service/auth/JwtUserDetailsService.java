@@ -1,5 +1,6 @@
 package org.cecil.start.service.auth;
 
+import org.cecil.start.api.model.JwtUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

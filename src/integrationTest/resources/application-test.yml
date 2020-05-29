@@ -1,3 +1,7 @@
+spring:
+  profiles:
+    active: test
+
 #spring:
 #  security:
 #    oauth2:
@@ -7,7 +11,7 @@
 #            clientId: 89246c1301f6894ef5bd
 #            clientSecret:
 jwt:
-  signing-key-secret:
+  signing-key-secret: YmFy
   get-token-uri: /authenticate
   refresh-token-uri: /refresh
   http-request-header: Authorization

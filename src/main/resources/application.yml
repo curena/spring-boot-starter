@@ -20,7 +20,7 @@ management:
         include: info,health,metrics,mappings
 
 jwt:
-  signing-key-secret:
+  signing-key-secret: YmFy
   get-token-uri: /authenticate
   refresh-token-uri: /refresh
   http-request-header: Authorization

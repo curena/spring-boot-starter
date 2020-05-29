@@ -31,7 +31,7 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
     @Autowired
     public JwtTokenAuthorizationOncePerRequestFilter(UserDetailsService jwtUserDetailsService,
                                                      JwtTokenUtil jwtTokenUtil,
-                                                     @Value("${jwt.http.request.header}") String tokenHeader) {
+                                                     @Value("${jwt.http-request-header}") String tokenHeader) {
         this.jwtUserDetailsService = jwtUserDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.tokenHeader = tokenHeader;

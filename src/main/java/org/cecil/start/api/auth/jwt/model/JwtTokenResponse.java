@@ -1,13 +1,15 @@
 package org.cecil.start.api.auth.jwt.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class JwtTokenResponse implements Serializable {
     private static final long serialVersionUID = 7232821020131132402L;
-    private final String token;
+    private String token;
 }

@@ -10,20 +10,33 @@ import org.springframework.security.core.context.SecurityContextImpl
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
 import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority
+import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
+import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.springframework.web.context.WebApplicationContext
 import spock.lang.Specification
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY
 
+@ActiveProfiles("test")
 @WebMvcTest
-class BaseIntegrationSpec extends Specification {
+class BaseWebMvcIntegrationSpec extends Specification {
     @Autowired
+    WebApplicationContext webAppContext
+
+    @Autowired
+    protected ObjectMapper objectMapper
+
     protected MockMvc mockMvc
 
-    @Autowired
-    ObjectMapper objectMapper
-
     protected static faker = new Faker()
+
+    def setup() {
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(webAppContext)
+                .apply(springSecurity()).build()
+    }
 
     static getMockSession(OAuth2AuthenticationToken principal) {
         def session = new MockHttpSession()
@@ -32,6 +45,7 @@ class BaseIntegrationSpec extends Specification {
     }
 
     static OAuth2AuthenticationToken buildPrincipal() {
+
         Map<String, Object> attributes = new HashMap<>()
         attributes.put("sub", "fakeId")
         attributes.put("name", faker.artist().name())
