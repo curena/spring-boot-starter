@@ -2,6 +2,7 @@ package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
+import org.cecil.start.util.JwtTokenUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.mock.web.MockHttpSession
@@ -29,6 +30,9 @@ class BaseWebMvcIntegrationSpec extends Specification {
     protected ObjectMapper objectMapper
 
     protected MockMvc mockMvc
+
+    @Autowired
+    protected JwtTokenUtil jwtTokenUtil
 
     protected static faker = new Faker()
 

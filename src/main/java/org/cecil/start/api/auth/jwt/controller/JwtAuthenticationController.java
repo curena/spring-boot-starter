@@ -1,5 +1,7 @@
 package org.cecil.start.api.auth.jwt.controller;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import lombok.extern.slf4j.Slf4j;
 import org.cecil.start.api.auth.jwt.model.JwtTokenRequest;
 import org.cecil.start.api.auth.jwt.model.JwtTokenResponse;
 import org.cecil.start.exception.auth.AuthenticationException;
@@ -21,6 +23,7 @@ import java.util.Objects;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")//react
+@Slf4j
 public class JwtAuthenticationController {
     @Value("${jwt.http-request-header}")
     private String tokenHeader;
