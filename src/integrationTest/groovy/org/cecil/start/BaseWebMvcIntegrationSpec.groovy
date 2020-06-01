@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
 import org.cecil.start.util.JwtTokenUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.mock.web.MockHttpSession
 import org.springframework.security.core.GrantedAuthority
@@ -20,6 +21,7 @@ import spock.lang.Specification
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
 import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY
 
+@AutoConfigureDataJpa
 @ActiveProfiles("test")
 @WebMvcTest
 class BaseWebMvcIntegrationSpec extends Specification {

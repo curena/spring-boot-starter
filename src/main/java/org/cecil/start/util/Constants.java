@@ -6,7 +6,8 @@ public class Constants {
     public static final String BASE_URL = "/api";
     public static final String SECRET = "A$ecretF0r$igningJWTs";
     public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
+    public static final String AUTH_HEADER = "Authorization";
     public static final String SIGNUP_URL = "/users/sign-up";
+    public static final String REFRESH_TOKEN_URL = "/refresh";
     public static final String USER_ROLE = "USER";
 }

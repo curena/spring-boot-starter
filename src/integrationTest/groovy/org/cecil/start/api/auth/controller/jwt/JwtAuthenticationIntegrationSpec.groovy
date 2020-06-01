@@ -2,53 +2,51 @@ package org.cecil.start.api.auth.controller.jwt
 
 import com.auth0.jwt.exceptions.TokenExpiredException
 import org.cecil.start.BaseWebMvcIntegrationSpec
+import org.cecil.start.api.auth.jwt.model.JwtTokenResponse
 import org.cecil.start.api.auth.jwt.model.UserModel
-
-import org.cecil.start.service.auth.JwtUserDetails
+import org.cecil.start.service.auth.UserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.TestPropertySource
-import spock.lang.Ignore
 import spock.lang.Unroll
 
+import static org.cecil.start.util.Constants.*
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
-@Ignore
 @TestPropertySource(locations = "/application-test.yml")
-class JwtAuthenticationControllerIntegrationSpec extends BaseWebMvcIntegrationSpec {
-    @Value('${jwt.get-token-uri}')
-    String getTokenUri
-
-    @Value('${jwt.refresh-token-uri}')
-    String refreshTokenUri
-
-    @Value('${jwt.http-request-header}')
-    String authorizationHeader
-
+class JwtAuthenticationIntegrationSpec extends BaseWebMvcIntegrationSpec {
     @Value('${jwt.token.expiration-in-seconds}')
     long tokenExpiration
+
+    @Autowired
+    UserService userService
 
     def cleanup() {
         jwtTokenUtil.expirationTimeInSeconds = tokenExpiration
     }
 
     @Unroll
-    def "POST to /authenticate with #description should return #expected"() {
+    def "POST to /login with #description should return #expected"() {
+        given:
+        userService.signUpUser(new UserModel("foo", "bar"))
+
         expect:
         def response = mockMvc.perform(
-                post(getTokenUri)
+                post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestBody)))
                 .andExpect(status().is(expected))
-                .andReturn().getResponse().getContentAsString()
+                .andReturn().getResponse()
+
 
         if (expected == HttpStatus.OK.value()) {
-            def authenticationResponse = objectMapper.readValue(response, JwtTokenResponse)
-            assert authenticationResponse.token
-            assert !authenticationResponse.token.isEmpty()
+            def authHeader = response.getHeader("Authorization")
+            assert authHeader != null
+            assert authHeader.contains("Bearer ")
         }
 
         where:
@@ -63,8 +61,8 @@ class JwtAuthenticationControllerIntegrationSpec extends BaseWebMvcIntegrationSp
         def expiredToken = jwtTokenUtil.generateToken("foo")
         sleep(1001)
         mockMvc.perform(
-                get(refreshTokenUri)
-                        .header(authorizationHeader, "Bearer ${expiredToken}"))
+                get(REFRESH_TOKEN_URL)
+                        .header(AUTH_HEADER, "${TOKEN_PREFIX}${expiredToken}"))
                 .andExpect(status().isBadRequest())
 
         then:
@@ -73,14 +71,11 @@ class JwtAuthenticationControllerIntegrationSpec extends BaseWebMvcIntegrationSp
 
     def "GET to /refresh with extant token should return 200"() {
         given:
-        def validToken = jwtTokenUtil.generateToken(JwtUserDetails.builder()
-                .username("foo")
-                .password("bar")
-                .authorities("USER").build())
+        def validToken = jwtTokenUtil.generateToken("foo")
         when:
         def response = mockMvc.perform(
-                get(refreshTokenUri)
-                        .header(authorizationHeader, "Bearer ${validToken}"))
+                get(REFRESH_TOKEN_URL)
+                        .header(AUTH_HEADER, "${TOKEN_PREFIX}${validToken}"))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString()
 

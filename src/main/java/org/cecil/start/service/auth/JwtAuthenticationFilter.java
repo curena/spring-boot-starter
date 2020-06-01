@@ -11,7 +11,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,7 +20,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import static org.cecil.start.util.Constants.HEADER_STRING;
+import static org.cecil.start.util.Constants.AUTH_HEADER;
 import static org.cecil.start.util.Constants.TOKEN_PREFIX;
 
 @RequiredArgsConstructor
@@ -50,7 +49,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             HttpServletResponse response,
                                             FilterChain chain,
                                             Authentication authResult) throws IOException, ServletException {
-        String username = ((User)authResult.getPrincipal()).getUsername();
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwtTokenUtil.generateToken(username));
+        String username = ((User) authResult.getPrincipal()).getUsername();
+        response.addHeader(AUTH_HEADER, TOKEN_PREFIX + jwtTokenUtil.generateToken(username));
     }
 }
