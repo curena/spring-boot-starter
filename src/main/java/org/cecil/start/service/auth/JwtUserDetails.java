@@ -1,10 +1,11 @@
-package org.cecil.start.api.model;
+package org.cecil.start.service.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,10 @@ public class JwtUserDetails extends User {
 
     public JwtUserDetails(String username, String password, String role) {
         super(username, password, List.of(new SimpleGrantedAuthority(role)));
+    }
+
+    public JwtUserDetails() {
+        super("", "", new ArrayList<>());
     }
 
     @JsonIgnore

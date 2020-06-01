@@ -1,6 +1,15 @@
 spring:
+#  http:
+#    log-request-details: true
   profiles:
     active: production
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+    root: debug
+
 #spring:
 #  security:
 #    oauth2:
@@ -20,9 +29,13 @@ management:
         include: info,health,metrics,mappings
 
 jwt:
-  signing-key-secret: YmFy
+  signing-key-secret: A$ecretF0r$igningJWTs
   get-token-uri: /authenticate
   refresh-token-uri: /refresh
   http-request-header: Authorization
   token:
     expiration-in-seconds: 604800
+
+springdoc:
+  api-docs:
+    path: /api-docs

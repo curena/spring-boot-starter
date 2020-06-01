@@ -8,7 +8,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class JwtTokenRequest implements Serializable {
+public class UserModel implements Serializable {
     private static final long serialVersionUID = 5517724239050644808L;
 
     private String username;

@@ -2,7 +2,6 @@ package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
-import org.cecil.start.api.model.JwtUserDetails
 import org.cecil.start.util.JwtTokenUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
@@ -63,10 +62,6 @@ class BaseWebMvcIntegrationSpec extends Specification {
     }
 
     def generateValidToken() {
-        jwtTokenUtil.generateToken(JwtUserDetails
-                .withDefaultPasswordEncoder()
-                .username("foo")
-                .password("bar")
-                .authorities("USER").build())
+        jwtTokenUtil.generateToken("foo")
     }
 }

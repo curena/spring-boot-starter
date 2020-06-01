@@ -2,7 +2,7 @@ package org.cecil.start.util
 
 
 import org.cecil.start.BaseSpec
-import org.cecil.start.api.model.JwtUserDetails
+import org.cecil.start.service.auth.JwtUserDetails
 
 import java.time.Instant
 
@@ -13,7 +13,7 @@ class JwtTokenUtilSpec extends BaseSpec {
 
     def setup() {
         jwtTokenUtil.secret = secret
-        jwtTokenUtil.expiration = expirationInSeconds
+        jwtTokenUtil.expirationTimeInSeconds = expirationInSeconds
     }
 
     def "JWT generation happy path"() {

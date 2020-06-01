@@ -1,9 +1,6 @@
 package org.cecil.start.api.controller
 
 import org.cecil.start.BaseWebMvcIntegrationSpec
-import org.cecil.start.api.model.JwtUserDetails
-import org.springframework.security.test.context.support.WithMockUser
-import spock.lang.Ignore
 
 import java.nio.charset.Charset
 
