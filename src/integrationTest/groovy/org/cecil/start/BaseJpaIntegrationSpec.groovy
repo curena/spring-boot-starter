@@ -1,13 +1,12 @@
 package org.cecil.start
 
-
 import com.github.javafaker.Faker
-import org.springframework.context.annotation.Profile
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
+import org.springframework.test.context.ActiveProfiles
 import spock.lang.Specification
 
-@Profile("test")
+@ActiveProfiles("test")
+@DataJpaTest
 class BaseJpaIntegrationSpec extends Specification {
-
     protected static faker = new Faker()
-
 }
