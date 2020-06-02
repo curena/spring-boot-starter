@@ -7,8 +7,8 @@ logging:
   level:
     org:
       springframework:
-        web: debug
-    root: debug
+        web: warn
+    root: warn
 
 #spring:
 #  security:

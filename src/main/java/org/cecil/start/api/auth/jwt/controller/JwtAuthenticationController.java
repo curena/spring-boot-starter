@@ -34,9 +34,11 @@ public class JwtAuthenticationController {
 
         if (token != null && jwtTokenUtil.canTokenBeRefreshed(token)) {
             String refreshedToken = jwtTokenUtil.refreshToken(token);
-            return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
+            return ResponseEntity.ok(JwtTokenResponse.builder().token(refreshedToken).build());
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(
+                    JwtTokenResponse.builder().token(null).error("Token could not be refreshed.").build()
+            );
         }
     }
 

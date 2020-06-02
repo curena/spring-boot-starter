@@ -1,7 +1,12 @@
 spring:
   profiles:
     active: test
-
+logging:
+  level:
+    org:
+      springframework:
+        web: debug
+    root: debug
 #spring:
 #  security:
 #    oauth2:

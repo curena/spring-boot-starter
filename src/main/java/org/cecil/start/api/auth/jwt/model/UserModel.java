@@ -8,6 +8,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 5517724239050644808L;
 

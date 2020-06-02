@@ -55,7 +55,7 @@ class JwtAuthenticationIntegrationSpec extends BaseWebMvcIntegrationSpec {
         new UserModel("bar", "baz") | "invalid request body" | HttpStatus.UNAUTHORIZED.value()
     }
 
-    def "GET to /refresh with expired token should return 400 and throw ExpiredJwtException"() {
+    def "GET to /refresh with expired token should return 400 and throw TokenExpiredException"() {
         when:
         jwtTokenUtil.expirationTimeInSeconds = 1
         def expiredToken = jwtTokenUtil.generateToken("foo")
