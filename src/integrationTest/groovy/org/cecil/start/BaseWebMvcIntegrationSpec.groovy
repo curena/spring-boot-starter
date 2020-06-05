@@ -3,6 +3,8 @@ package org.cecil.start
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
+import org.cecil.start.util.AuthenticationRequest
+import org.cecil.start.util.AuthenticationResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa

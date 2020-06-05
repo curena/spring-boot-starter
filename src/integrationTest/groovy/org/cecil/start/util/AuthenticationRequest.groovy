@@ -1,4 +1,4 @@
-package org.cecil.start
+package org.cecil.start.util
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import groovy.transform.builder.Builder
