@@ -4,17 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference
 import org.cecil.start.BaseWebMvcIntegrationSpec
 import org.cecil.start.api.model.Task
 import org.cecil.start.db.repository.TaskRepository
-import org.cecil.start.util.Constants
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.MediaType
 
 import java.nio.charset.Charset
 
 import static org.cecil.start.util.Constants.AUTH_HEADER
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 class TaskControllerIntegrationSpec extends BaseWebMvcIntegrationSpec {
@@ -23,7 +19,7 @@ class TaskControllerIntegrationSpec extends BaseWebMvcIntegrationSpec {
 
     def "Tasks happy path"() {
         given:
-        def validToken = "${Constants.TOKEN_PREFIX}${generateValidToken()}"
+        def validToken = getAuth0Token().accessToken
 
         expect: "POST new task"
         def task = new Task("Call grandma")

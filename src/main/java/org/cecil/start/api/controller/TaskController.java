@@ -2,8 +2,6 @@ package org.cecil.start.api.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.cecil.start.api.model.Task;
-import org.cecil.start.db.entity.TaskEntity;
-import org.cecil.start.db.repository.TaskRepository;
 import org.cecil.start.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

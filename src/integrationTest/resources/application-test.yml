@@ -7,15 +7,12 @@ logging:
       springframework:
         web: debug
     root: debug
-#spring:
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          github:
-#            clientId: 89246c1301f6894ef5bd
-#            clientSecret:
 jwt:
-  refresh-token-uri: /refresh
   token:
-    expiration-in-seconds: 604800
+    expiration-in-seconds: 86400
+
+auth0:
+  issuer: https://curena-dev.auth0.com
+  api-audience: https://tasks.starter.com
+  grant-type: client_credentials
+  authorization-uri: /oauth/token

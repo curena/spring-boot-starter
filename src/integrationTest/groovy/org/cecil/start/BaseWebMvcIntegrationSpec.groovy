@@ -1,28 +1,27 @@
 package org.cecil.start
 
+
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.javafaker.Faker
-import org.cecil.start.util.JwtTokenUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.mock.web.MockHttpSession
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.context.SecurityContextImpl
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken
-import org.springframework.security.oauth2.core.user.DefaultOAuth2User
-import org.springframework.security.oauth2.core.user.OAuth2UserAuthority
+import org.springframework.http.MediaType
+import org.springframework.http.ReactiveHttpOutputMessage
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.web.context.WebApplicationContext
+import org.springframework.web.reactive.function.BodyInserter
+import org.springframework.web.reactive.function.BodyInserters
+import org.springframework.web.reactive.function.client.WebClient
 import spock.lang.Specification
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity
-import static org.springframework.security.web.context.HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY
 
 @AutoConfigureDataJpa
-@ActiveProfiles("test")
+@ActiveProfiles(["test", "local"])
 @WebMvcTest
 class BaseWebMvcIntegrationSpec extends Specification {
     @Autowired
@@ -33,8 +32,23 @@ class BaseWebMvcIntegrationSpec extends Specification {
 
     protected MockMvc mockMvc
 
-    @Autowired
-    protected JwtTokenUtil jwtTokenUtil
+    @Value('${auth0.client-id}')
+    private String clientId
+
+    @Value('${auth0.client-secret}')
+    private String clientSecret
+
+    @Value('${auth0.api-audience}')
+    private String audience
+
+    @Value('${auth0.grant-type}')
+    private String grantType
+
+    @Value('${auth0.issuer}')
+    private String authBaseUrl
+
+    @Value('${auth0.authorization-uri}')
+    private String authorizationUri
 
     protected static faker = new Faker()
 
@@ -44,26 +58,25 @@ class BaseWebMvcIntegrationSpec extends Specification {
                 .apply(springSecurity()).build()
     }
 
-    static getMockSession(OAuth2AuthenticationToken principal) {
-        def session = new MockHttpSession()
-        session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, new SecurityContextImpl(principal))
-        session
+    def authenticationRequest() {
+        AuthenticationRequest.builder()
+                .clientId(clientId)
+                .clientSecret(clientSecret)
+                .audience(audience)
+                .grantType(grantType).build()
     }
 
-    static OAuth2AuthenticationToken buildPrincipal() {
-
-        Map<String, Object> attributes = new HashMap<>()
-        attributes.put("sub", "fakeId")
-        attributes.put("name", faker.artist().name())
-        attributes.put("email", faker.internet().emailAddress())
-
-        List<GrantedAuthority> authorities = Collections.singletonList(
-                new OAuth2UserAuthority("ROLE_USER", attributes))
-        def user = new DefaultOAuth2User(authorities, attributes, "sub")
-        new OAuth2AuthenticationToken(user, authorities, "whatever")
-    }
-
-    def generateValidToken() {
-        jwtTokenUtil.generateToken("foo")
+    def getAuth0Token() {
+        def webClient = WebClient.create(authBaseUrl)
+        BodyInserter<AuthenticationRequest, ReactiveHttpOutputMessage> bodyInserter =
+                BodyInserters.fromValue(authenticationRequest())
+        def postResponse = webClient.post().uri(authorizationUri)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(bodyInserter)
+                .retrieve()
+                .bodyToMono(String)
+                .block()
+        objectMapper.readValue(postResponse, AuthenticationResponse)
     }
 }

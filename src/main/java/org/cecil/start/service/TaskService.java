@@ -5,7 +5,6 @@ import org.cecil.start.api.model.Task;
 import org.cecil.start.db.entity.TaskEntity;
 import org.cecil.start.db.repository.TaskRepository;
 import org.cecil.start.service.mapping.TaskMapper;
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

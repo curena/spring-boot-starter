@@ -1,6 +1,4 @@
 spring:
-#  http:
-#    log-request-details: true
   profiles:
     active: production
 logging:
@@ -10,31 +8,15 @@ logging:
         web: warn
     root: warn
 
-#spring:
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          github:
-#            clientId:
-#            clientSecret:
-#          google:
-#            clientId:
-#            clientSecret:
+auth0:
+  issuer: https://curena-dev.auth0.com
+  api-audience: https://tasks.starter.com
 
 management:
   endpoints:
     web:
       exposure:
         include: info,health,metrics,mappings
-
-jwt:
-  signing-key-secret: A$ecretF0r$igningJWTs
-  get-token-uri: /authenticate
-  refresh-token-uri: /refresh
-  http-request-header: Authorization
-  token:
-    expiration-in-seconds: 604800
 
 springdoc:
   api-docs:
